@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -32,42 +32,42 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.safehtml.shared.SafeHtml;
 
 public class ExportAsTextDialog extends DialogBox {
-	
-	VerticalPanel vp;
-	
-	public ExportAsTextDialog( String s) {
-		super();
-	//	RichTextArea tb;
-		TextArea ta;
-		Button okButton;
-		Label  la2;
-		SafeHtml html;
-		vp=new VerticalPanel();
-		setWidget(vp);
-		setText("Export as Text");
-		vp.add(new Label("Text file for this circuit is..."));
+
+    VerticalPanel vp;
+
+    public ExportAsTextDialog( String s) {
+        super();
+        //	RichTextArea tb;
+        TextArea ta;
+        Button okButton;
+        Label  la2;
+        SafeHtml html;
+        vp=new VerticalPanel();
+        setWidget(vp);
+        setText("Export as Text");
+        vp.add(new Label("Text file for this circuit is..."));
 //		vp.add(tb = new RichTextArea());
 //		html=SafeHtmlUtils.fromString(s);
 //		html=SafeHtmlUtils.fromTrustedString(html.asString().replace("\n", "<BR>"));
 //		tb.setHTML(html);
-		vp.add(ta= new TextArea());
-		ta.setWidth("300px");
-		ta.setHeight("200px");
-		ta.setText(s);
-		vp.add(la2 = new Label("To save this file select it all (eg click in text and type control-A) and copy to your clipboard (eg control-C) before pasting to an empty text file (eg on Windows Notepad) and saving as a new file.", true));
-		la2.setWidth("300px");
-		vp.add(okButton = new Button("OK"));
-		okButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				closeDialog();
-			}
-		});
-		this.center();
-	}
-	
-	protected void closeDialog()
-	{
-		this.hide();
-	}
+        vp.add(ta= new TextArea());
+        ta.setWidth("300px");
+        ta.setHeight("200px");
+        ta.setText(s);
+        vp.add(la2 = new Label("To save this file select it all (eg click in text and type control-A) and copy to your clipboard (eg control-C) before pasting to an empty text file (eg on Windows Notepad) and saving as a new file.", true));
+        la2.setWidth("300px");
+        vp.add(okButton = new Button("OK"));
+        okButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                closeDialog();
+            }
+        });
+        this.center();
+    }
+
+    protected void closeDialog()
+    {
+        this.hide();
+    }
 
 }

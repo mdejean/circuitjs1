@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,7 +20,13 @@
 package com.lushprojects.circuitjs1.client;
 
 class SquareRailElm extends RailElm {
-	public SquareRailElm(int xx, int yy) { super(xx, yy, WF_SQUARE); }
-	Class getDumpClass() { return RailElm.class; }
-	int getShortcut() { return 0; }
+    public SquareRailElm(int xx, int yy) {
+        super(xx, yy, WF_SQUARE);
     }
+    Class getDumpClass() {
+        return RailElm.class;
+    }
+    int getShortcut() {
+        return 0;
+    }
+}

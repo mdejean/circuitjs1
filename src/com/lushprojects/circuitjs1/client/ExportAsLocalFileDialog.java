@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -30,48 +30,48 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 
 public class ExportAsLocalFileDialog extends DialogBox {
-	
-	VerticalPanel vp;
-	
-	static public final native boolean downloadIsSupported() 
-	/*-{
-		return !!(("download" in $doc.createElement("a")));
-	 }-*/;
-	
-	static public final native String getBlobUrl(String data) 
-	/*-{
-		var datain=[""];
-		datain[0]=data;
-		var blob=new Blob(datain, {type: 'text/plain' } );
-		var url = URL.createObjectURL(blob);
-		return url;
-	}-*/;
-	
-	public ExportAsLocalFileDialog(String data) {
-		super();
-		Button okButton;
-		Anchor a;
-		String url;
-		vp=new VerticalPanel();
-		setWidget(vp);
-		setText("Export as Local File");
-		vp.add(new Label("Click on the link below to save your circuit"));
-		url=getBlobUrl(data);
-		a=new Anchor("my circuit.txt", url);
-		a.getElement().setAttribute("Download", "my circuit.txt");
-		vp.add(a);
-		vp.add(okButton = new Button("OK"));
-		okButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				closeDialog();
-			}
-		});
-		this.center();
-	}
-	
-	protected void closeDialog()
-	{
-		this.hide();
-	}
+
+    VerticalPanel vp;
+
+    static public final native boolean downloadIsSupported()
+    /*-{
+    	return !!(("download" in $doc.createElement("a")));
+     }-*/;
+
+    static public final native String getBlobUrl(String data)
+    /*-{
+    	var datain=[""];
+    	datain[0]=data;
+    	var blob=new Blob(datain, {type: 'text/plain' } );
+    	var url = URL.createObjectURL(blob);
+    	return url;
+    }-*/;
+
+    public ExportAsLocalFileDialog(String data) {
+        super();
+        Button okButton;
+        Anchor a;
+        String url;
+        vp=new VerticalPanel();
+        setWidget(vp);
+        setText("Export as Local File");
+        vp.add(new Label("Click on the link below to save your circuit"));
+        url=getBlobUrl(data);
+        a=new Anchor("my circuit.txt", url);
+        a.getElement().setAttribute("Download", "my circuit.txt");
+        vp.add(a);
+        vp.add(okButton = new Button("OK"));
+        okButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                closeDialog();
+            }
+        });
+        this.center();
+    }
+
+    protected void closeDialog()
+    {
+        this.hide();
+    }
 
 }

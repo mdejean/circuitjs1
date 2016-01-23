@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -22,14 +22,24 @@ package com.lushprojects.circuitjs1.client;
 //import java.awt.*;
 //import java.util.StringTokenizer;
 
-    class NorGateElm extends OrGateElm {
-	public NorGateElm(int xx, int yy) { super(xx, yy); }
-	public NorGateElm(int xa, int ya, int xb, int yb, int f,
-			   StringTokenizer st) {
-	    super(xa, ya, xb, yb, f, st);
-	}
-	String getGateName() { return "NOR gate"; }
-	boolean isInverting() { return true; }
-	int getDumpType() { return 153; }
-	int getShortcut() { return '#'; }
+class NorGateElm extends OrGateElm {
+    public NorGateElm(int xx, int yy) {
+        super(xx, yy);
     }
+    public NorGateElm(int xa, int ya, int xb, int yb, int f,
+                      StringTokenizer st) {
+        super(xa, ya, xb, yb, f, st);
+    }
+    String getGateName() {
+        return "NOR gate";
+    }
+    boolean isInverting() {
+        return true;
+    }
+    int getDumpType() {
+        return 153;
+    }
+    int getShortcut() {
+        return '#';
+    }
+}

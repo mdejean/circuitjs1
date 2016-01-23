@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -37,9 +37,9 @@ package com.lushprojects.circuitjs1.client;
 //Visual appearance of handles changed
 //Accepts "2k2" style engineers short-hand for component values
 //Menus prettified
-//v0.1.1 
+//v0.1.1
 //Bug fix for PNP transistors and past
-//v0.1.0 - 
+//v0.1.0 -
 //Initial test release on web
 
 
@@ -55,29 +55,28 @@ import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 
 public class circuitjs1 implements EntryPoint {
-	
-	public static final String versionString="1.0.1";
 
-	static CirSim mysim;
-	
-  public void onModuleLoad() {
-	  mysim = new CirSim();
-	  mysim.init();
+    public static final String versionString="1.0.1";
 
-	    Window.addResizeHandler(new ResizeHandler() {
-	    	 
+    static CirSim mysim;
+
+    public void onModuleLoad() {
+        mysim = new CirSim();
+        mysim.init();
+
+        Window.addResizeHandler(new ResizeHandler() {
+
             public void onResize(ResizeEvent event)
-            {               
-            	mysim.setCanvasSize();
-                mysim.setiFrameHeight();	
-                	
+            {
+                mysim.setCanvasSize();
+                mysim.setiFrameHeight();
+
             }
         });
-	  mysim.updateCircuit();
-	  
+        mysim.updateCircuit();
 
-	  
-  	}
-  
-  }
-	  
+
+
+    }
+
+}

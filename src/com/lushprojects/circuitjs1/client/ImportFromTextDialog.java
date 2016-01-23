@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -34,53 +34,53 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.safehtml.shared.SafeHtml;
 
 public class ImportFromTextDialog extends DialogBox {
-	
-VerticalPanel vp;
-HorizontalPanel hp;
-CirSim sim;
+
+    VerticalPanel vp;
+    HorizontalPanel hp;
+    CirSim sim;
 // RichTextArea textBox;
-TextArea textArea;
-	
-	public ImportFromTextDialog( CirSim asim) {
-		super();
-		sim=asim;
-		Button okButton, cancelButton;
-		vp=new VerticalPanel();
-		setWidget(vp);
-		setText("Import from Text");
-		vp.add(new Label("Paste the text file for your circuit here..."));
+    TextArea textArea;
+
+    public ImportFromTextDialog( CirSim asim) {
+        super();
+        sim=asim;
+        Button okButton, cancelButton;
+        vp=new VerticalPanel();
+        setWidget(vp);
+        setText("Import from Text");
+        vp.add(new Label("Paste the text file for your circuit here..."));
 //		vp.add(textBox = new RichTextArea());
-		vp.add(textArea = new TextArea());
-		textArea.setWidth("300px");
-		textArea.setHeight("200px");
-		hp = new HorizontalPanel();
-		vp.add(hp);
-		hp.add(okButton = new Button("OK"));
-		okButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				String s;
-				sim.pushUndo();
-				closeDialog();
+        vp.add(textArea = new TextArea());
+        textArea.setWidth("300px");
+        textArea.setHeight("200px");
+        hp = new HorizontalPanel();
+        vp.add(hp);
+        hp.add(okButton = new Button("OK"));
+        okButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                String s;
+                sim.pushUndo();
+                closeDialog();
 //				s=textBox.getHTML();
 //				s=s.replace("<br>", "\r");
-				s=textArea.getText();
-				if (s!=null)
-					sim.readSetup(s, true);
-			}
-		});
-		hp.add(cancelButton = new Button("Cancel"));
-		cancelButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				closeDialog();
-			}
-		});
-		this.center();
-		show();
-	}
-	
-	protected void closeDialog()
-	{
-		this.hide();
-	}
+                s=textArea.getText();
+                if (s!=null)
+                    sim.readSetup(s, true);
+            }
+        });
+        hp.add(cancelButton = new Button("Cancel"));
+        cancelButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                closeDialog();
+            }
+        });
+        this.center();
+        show();
+    }
+
+    protected void closeDialog()
+    {
+        this.hide();
+    }
 
 }

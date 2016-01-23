@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,9 +20,15 @@
 package com.lushprojects.circuitjs1.client;
 
 class PTransistorElm extends TransistorElm {
-	public PTransistorElm(int xx, int yy) { super(xx, yy, true); }
-	Class getDumpClass() { return TransistorElm.class; }
-	
-	 int getShortcut() { return 'p'; }
-	 
+    public PTransistorElm(int xx, int yy) {
+        super(xx, yy, true);
     }
+    Class getDumpClass() {
+        return TransistorElm.class;
+    }
+
+    int getShortcut() {
+        return 'p';
+    }
+
+}

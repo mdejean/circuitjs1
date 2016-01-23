@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -24,14 +24,16 @@ class GraphicElm extends CircuitElm
 
     public GraphicElm(int xx, int yy)
     {
-	super(xx,yy);
+        super(xx,yy);
     }
 
     public GraphicElm(int xa, int ya, int xb, int yb, int flags)
     {
-	super(xa, ya, xb, yb, flags);
+        super(xa, ya, xb, yb, flags);
     }
 
-    int getPostCount() { return 0; }
+    int getPostCount() {
+        return 0;
+    }
 }
 

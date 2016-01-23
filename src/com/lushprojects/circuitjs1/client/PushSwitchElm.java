@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,7 +20,13 @@
 package com.lushprojects.circuitjs1.client;
 
 class PushSwitchElm extends SwitchElm {
-	public PushSwitchElm(int xx, int yy) { super(xx, yy, true); }
-	Class getDumpClass() { return SwitchElm.class; }
-	int getShortcut() { return 0; }
+    public PushSwitchElm(int xx, int yy) {
+        super(xx, yy, true);
     }
+    Class getDumpClass() {
+        return SwitchElm.class;
+    }
+    int getShortcut() {
+        return 0;
+    }
+}

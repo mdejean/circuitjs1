@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -25,5 +25,7 @@ class CircuitNode {
     int x, y;
     Vector<CircuitNodeLink> links;
     boolean internal;
-    CircuitNode() { links = new Vector<CircuitNodeLink>(); }
+    CircuitNode() {
+        links = new Vector<CircuitNodeLink>();
+    }
 }

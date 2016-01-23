@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,13 +20,17 @@
 package com.lushprojects.circuitjs1.client;
 
 class ClockElm extends RailElm {
-	public ClockElm(int xx, int yy) {
-	    super(xx, yy, WF_SQUARE);
-	    maxVoltage = 2.5;
-	    bias = 2.5;
-	    frequency = 100;
-	    flags |= FLAG_CLOCK;
-	}
-	Class getDumpClass() { return RailElm.class; }
-	int getShortcut() { return 0; }
+    public ClockElm(int xx, int yy) {
+        super(xx, yy, WF_SQUARE);
+        maxVoltage = 2.5;
+        bias = 2.5;
+        frequency = 100;
+        flags |= FLAG_CLOCK;
     }
+    Class getDumpClass() {
+        return RailElm.class;
+    }
+    int getShortcut() {
+        return 0;
+    }
+}

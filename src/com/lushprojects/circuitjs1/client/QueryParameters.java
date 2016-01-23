@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -41,22 +41,22 @@ public class QueryParameters
             }
         }
     }
-    
+
     public String getValue(String key)
     {
         return (String) map.get(key);
     }
-    
 
-    
-    public boolean getBooleanValue(String key, boolean def){
-    	String val=getValue(key);
-    	if (val==null)
-    		return def;
-    	else
-    		return (val=="1" || val.equalsIgnoreCase("true"));
+
+
+    public boolean getBooleanValue(String key, boolean def) {
+        String val=getValue(key);
+        if (val==null)
+            return def;
+        else
+            return (val=="1" || val.equalsIgnoreCase("true"));
     }
-    
+
     private native String getQueryString()
     /*-{
           return $wnd.location.search;

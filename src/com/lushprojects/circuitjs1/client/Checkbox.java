@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -22,21 +22,21 @@ package com.lushprojects.circuitjs1.client;
 import com.google.gwt.user.client.ui.CheckBox;
 
 class Checkbox extends CheckBox {
-	public Checkbox(String s){
-		super(s);
-	}
-	
-	public Checkbox(String s, boolean b){
-		super(s);
-		this.setValue(b);
-	}
-	
-	public boolean getState(){
-		return this.getValue();
-	}
-	
-	public void setState(boolean s){
-		this.setValue(s);
-	}
-	
+    public Checkbox(String s) {
+        super(s);
+    }
+
+    public Checkbox(String s, boolean b) {
+        super(s);
+        this.setValue(b);
+    }
+
+    public boolean getState() {
+        return this.getValue();
+    }
+
+    public void setState(boolean s) {
+        this.setValue(s);
+    }
+
 }

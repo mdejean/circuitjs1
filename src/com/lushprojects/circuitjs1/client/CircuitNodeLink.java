@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,6 +20,6 @@
 package com.lushprojects.circuitjs1.client;
 
 class CircuitNodeLink {
-	int num;
-	CircuitElm elm;
-    }
+    int num;
+    CircuitElm elm;
+}

@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -20,10 +20,14 @@
 package com.lushprojects.circuitjs1.client;
 
 class OpAmpSwapElm extends OpAmpElm {
-	public OpAmpSwapElm(int xx, int yy) {
-	    super(xx, yy);
-	    flags |= FLAG_SWAP;
-	}
-	Class getDumpClass() { return OpAmpElm.class; }
-	int getShortcut() { return 'A'; }
+    public OpAmpSwapElm(int xx, int yy) {
+        super(xx, yy);
+        flags |= FLAG_SWAP;
     }
+    Class getDumpClass() {
+        return OpAmpElm.class;
+    }
+    int getShortcut() {
+        return 'A';
+    }
+}

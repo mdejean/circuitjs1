@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -39,39 +39,39 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Button;
 
 public class AboutBox extends PopupPanel {
-	
-	VerticalPanel vp;
-	Button okButton;
-	
-	AboutBox(String version) {
-		super();
-		vp = new VerticalPanel();
-		setWidget(vp);
-		vp.setWidth("400px");
-		vp.add(new HTML("<p>Circuit Simulator version "+version+".</p>"+
-		"<p>Original by Paul Falstad.<br><a href=\"http://www.falstad.com/\" target=\"_blank\">http://www.falstad.com/</a></p>"+
-		"<p>JavaScript conversion by Iain Sharp.<br><a href=\"http://lushprojects.com/\" target=\"_blank\">http://lushprojects.com/</a></p>"+
-		"<p style=\"font-size:9px\">This program is free software: you can redistribute it and/or modify it "+
-		"under the terms of the GNU General Public License as published by "+
-		"the Free Software Foundation, either version 2 of the License, or "+
-		"(at your option) any later version.</p>"+
-		"<p style=\"font-size:9px\">This program is distributed in the hope that it will be useful,"+
-		"but WITHOUT ANY WARRANTY; without even the implied warranty of "+
-		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "+
-		"GNU General Public License for more details.</p>"+
-		"<p style=\"font-size:9px\">For details of licensing see <A href=\"http://www.gnu.org/licenses/\" target=\"_blank\">http://www.gnu.org/licenses/</A>.</p>"+
-		"<p style=\"font-size:9px\">Source code:<A href=\"https://github.com/sharpie7/circuitjs1\" target=\"_blank\">https://github.com/sharpie7/circuitjs1</A></p>"));
-		vp.add(okButton = new Button("OK"));
-		okButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				close();
-			}
-		});
-		center();
-		show();
-	}
 
-	public void close() {
-		hide();
-	}
+    VerticalPanel vp;
+    Button okButton;
+
+    AboutBox(String version) {
+        super();
+        vp = new VerticalPanel();
+        setWidget(vp);
+        vp.setWidth("400px");
+        vp.add(new HTML("<p>Circuit Simulator version "+version+".</p>"+
+                        "<p>Original by Paul Falstad.<br><a href=\"http://www.falstad.com/\" target=\"_blank\">http://www.falstad.com/</a></p>"+
+                        "<p>JavaScript conversion by Iain Sharp.<br><a href=\"http://lushprojects.com/\" target=\"_blank\">http://lushprojects.com/</a></p>"+
+                        "<p style=\"font-size:9px\">This program is free software: you can redistribute it and/or modify it "+
+                        "under the terms of the GNU General Public License as published by "+
+                        "the Free Software Foundation, either version 2 of the License, or "+
+                        "(at your option) any later version.</p>"+
+                        "<p style=\"font-size:9px\">This program is distributed in the hope that it will be useful,"+
+                        "but WITHOUT ANY WARRANTY; without even the implied warranty of "+
+                        "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "+
+                        "GNU General Public License for more details.</p>"+
+                        "<p style=\"font-size:9px\">For details of licensing see <A href=\"http://www.gnu.org/licenses/\" target=\"_blank\">http://www.gnu.org/licenses/</A>.</p>"+
+                        "<p style=\"font-size:9px\">Source code:<A href=\"https://github.com/sharpie7/circuitjs1\" target=\"_blank\">https://github.com/sharpie7/circuitjs1</A></p>"));
+        vp.add(okButton = new Button("OK"));
+        okButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                close();
+            }
+        });
+        center();
+        show();
+    }
+
+    public void close() {
+        hide();
+    }
 }

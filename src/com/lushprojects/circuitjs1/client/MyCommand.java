@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@ package com.lushprojects.circuitjs1.client;
 import com.google.gwt.user.client.Command;
 
 public class MyCommand implements Command {
-	private final String menuName;
-	private final String itemName;
-	
-	public MyCommand(String name, String item){
-		menuName=name;
-		itemName=item;
-	}
-	
-	public void execute() {
-		circuitjs1.mysim.menuPerformed(menuName, itemName);
-	}
+    private final String menuName;
+    private final String itemName;
+
+    public MyCommand(String name, String item) {
+        menuName=name;
+        itemName=item;
+    }
+
+    public void execute() {
+        circuitjs1.mysim.menuPerformed(menuName, itemName);
+    }
 
 }

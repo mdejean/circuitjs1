@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -37,9 +37,9 @@ public class Color
     public final static Color cyan = new Color(0, 255, 255);
     public final static Color blue = new Color(0, 0, 255);
     public static final Color NONE = new Color("");
-    
+
     private int r, g, b;
-    
+
     // only for special cases, like no color, or maybe named colors
     private String colorText = null;
 
@@ -76,9 +76,9 @@ public class Color
         }
 
         return "#"
-            + pad(Integer.toHexString(r))
-            + pad(Integer.toHexString(g))
-            + pad(Integer.toHexString(b));
+               + pad(Integer.toHexString(r))
+               + pad(Integer.toHexString(g))
+               + pad(Integer.toHexString(b));
     }
 
     private String pad (String in)

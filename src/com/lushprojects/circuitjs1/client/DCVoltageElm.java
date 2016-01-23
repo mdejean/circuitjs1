@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -21,7 +21,13 @@ package com.lushprojects.circuitjs1.client;
 
 
 class DCVoltageElm extends VoltageElm {
-	public DCVoltageElm(int xx, int yy) { super(xx, yy, WF_DC); }
-	Class getDumpClass() { return VoltageElm.class; }
-	int getShortcut() { return 'v'; }
+    public DCVoltageElm(int xx, int yy) {
+        super(xx, yy, WF_DC);
     }
+    Class getDumpClass() {
+        return VoltageElm.class;
+    }
+    int getShortcut() {
+        return 'v';
+    }
+}

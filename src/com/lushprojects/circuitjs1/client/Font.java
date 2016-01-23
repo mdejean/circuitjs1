@@ -1,6 +1,6 @@
-/*    
+/*
     Copyright (C) Paul Falstad and Iain Sharp
-    
+
     This file is part of CircuitJS1.
 
     CircuitJS1 is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@ package com.lushprojects.circuitjs1.client;
 
 
 class Font {
-	static final int BOLD=1;
-	
-	String fontname;
-	int size;
-	
-	public Font(String name, int style, int size){
-		String styleStr="normal ";
-		if (name=="SansSerif")
-			name="sans-serif";
-		if ((style & BOLD) !=0)
-			styleStr="bold ";
-		fontname=styleStr+size+"px "+name;
-		this.size=size;
-	}
+    static final int BOLD=1;
+
+    String fontname;
+    int size;
+
+    public Font(String name, int style, int size) {
+        String styleStr="normal ";
+        if (name=="SansSerif")
+            name="sans-serif";
+        if ((style & BOLD) !=0)
+            styleStr="bold ";
+        fontname=styleStr+size+"px "+name;
+        this.size=size;
+    }
 }
