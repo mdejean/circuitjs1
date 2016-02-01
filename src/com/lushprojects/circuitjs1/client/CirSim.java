@@ -756,6 +756,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
         outputMenuBar.addItem(getClassCheckItem("Add Analog Output", "OutputElm"));
         outputMenuBar.addItem(getClassCheckItem("Add LED", "LEDElm"));
         outputMenuBar.addItem(getClassCheckItem("Add Lamp (beta)", "LampElm"));
+        outputMenuBar.addItem(getClassCheckItem("Add DC Motor", "DCMotorElm"));
         outputMenuBar.addItem(getClassCheckItem("Add Text", "TextElm"));
         outputMenuBar.addItem(getClassCheckItem("Add Box", "BoxElm"));
         outputMenuBar.addItem(getClassCheckItem("Add Scope Probe", "ProbeElm"));
@@ -4267,6 +4268,8 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
             return (CircuitElm) new HalfAdderElm(x1, y1, x2, y2, f, st);
         if (tint==194)
             return (CircuitElm) new MonostableElm(x1, y1, x2, y2, f, st);
+        if (tint==192)
+            return (CircuitElm) new DCMotorElm(x1, y1, x2, y2, f, st);
 
         return
             null;
@@ -4441,6 +4444,8 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
             return (CircuitElm) new HalfAdderElm(x1, y1);
         if (n=="MonostableElm")
             return (CircuitElm) new MonostableElm(x1, y1);
+        if (n=="DCMotorElm")
+            return (CircuitElm) new DCMotorElm(x1, y1);
 
         return null;
     }

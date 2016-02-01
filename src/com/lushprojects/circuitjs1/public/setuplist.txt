@@ -367,5 +367,8 @@ spark-sawtooth.txt Sawtooth Generator
 tesla.txt Tesla Coil
 spark-marx.txt Marx Generator
 -
++Motor
+dc-motor.txt DC Motor
+-
 -
 blank.txt Blank Circuit
