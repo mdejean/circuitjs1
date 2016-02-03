@@ -673,6 +673,10 @@ class Scope {
             m.addItem(scopeVbcMenuItem = new CheckboxMenuItem("Show Vbc", new MyCommand("scopepop", "showvbc")));
             m.addItem(scopeVceMenuItem = new CheckboxMenuItem("Show Vce", new MyCommand("scopepop", "showvce")));
             m.addItem(scopeVceIcMenuItem = new CheckboxMenuItem("Show Vce vs Ic", new MyCommand("scopepop", "showvcevsic")));
+            m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
+            m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
+            m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
+            m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
         } else {
             m.addItem(scopeVMenuItem = new CheckboxMenuItem("Show Voltage", new MyCommand("scopepop", "showvoltage")));
             m.addItem(scopeIMenuItem = new CheckboxMenuItem("Show Current", new MyCommand("scopepop", "showcurrent")));
@@ -700,25 +704,39 @@ class Scope {
             scopeVbcMenuItem.setState(value == VAL_VBC);
             scopeVceMenuItem.setState(value == VAL_VCE && ivalue != VAL_IC);
             scopeVceIcMenuItem.setState(value == VAL_VCE && ivalue == VAL_IC);
-            return scopeMenuBar;
         } else {
             scopeVMenuItem    .setState(showV && value == 0);
             scopeIMenuItem    .setState(showI && value == 0);
-            scopeScaleMenuItem.setState(showScale);
-            scopeMaxMenuItem  .setState(showMax);
-            scopeMinMenuItem  .setState(showMin);
-            scopeFreqMenuItem .setState(showFreq);
             scopePowerMenuItem.setState(value == VAL_POWER);
             scopeVIMenuItem   .setState(plot2d && !plotXY);
             scopeXYMenuItem   .setState(plotXY);
             scopeSelectYMenuItem.setEnabled(plotXY);
             scopeResistMenuItem.setState(value == VAL_R);
             scopeResistMenuItem.setEnabled(elm instanceof MemristorElm);
-            return scopeMenuBar;
         }
+        scopeScaleMenuItem.setState(showScale);
+        scopeMaxMenuItem  .setState(showMax);
+        scopeMinMenuItem  .setState(showMin);
+        scopeFreqMenuItem .setState(showFreq);
+        return scopeMenuBar;
     }
 
     void handleMenu(String mi) {
+        sim.pushUndo();
+        if (mi=="remove")
+            setElm(null);
+        if (mi=="speed2")
+            speedUp();
+        if (mi=="speed1/2")
+            slowDown();
+        if (mi=="scale")
+            adjustScale(.5);
+        if (mi=="maxscale")
+            adjustScale(1e-50);
+        if (mi=="selecty")
+            selectY();
+        if (mi=="reset")
+            resetGraph();
         if (mi == "showvoltage")
             showVoltage(scopeVMenuItem.getState());
         if (mi == "showcurrent")

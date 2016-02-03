@@ -2371,27 +2371,15 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
             scopes[i].setElm(menuElm);
         }
         if (menu=="scopepop") {
-            pushUndo();
-            if (item=="remove")
-                scopes[menuScope].setElm(null);
-            if (item=="speed2")
-                scopes[menuScope].speedUp();
-            if (item=="speed1/2")
-                scopes[menuScope].slowDown();
-            if (item=="scale")
-                scopes[menuScope].adjustScale(.5);
-            if (item=="maxscale")
-                scopes[menuScope].adjustScale(1e-50);
-            if (item=="stack")
+            if (item=="stack") {
+                pushUndo();
                 stackScope(menuScope);
-            if (item=="unstack")
+            } else if (item=="unstack") {
+                pushUndo();
                 unstackScope(menuScope);
-            if (item=="selecty")
-                scopes[menuScope].selectY();
-            if (item=="reset")
-                scopes[menuScope].resetGraph();
-            if (item.indexOf("show")==0 || item=="plotxy")
+            } else {
                 scopes[menuScope].handleMenu(item);
+            }
             //cv.repaint();
         }
         if (menu=="circuits" && item.indexOf("setup ") ==0) {
