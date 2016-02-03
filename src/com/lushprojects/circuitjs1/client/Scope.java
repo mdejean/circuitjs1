@@ -27,6 +27,7 @@ package com.lushprojects.circuitjs1.client;
 //import java.lang.reflect.Method;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -58,6 +59,27 @@ class Scope {
     CirSim sim;
     Canvas imageCanvas;
     Context2d imageContext;
+    
+    MenuBar scopeMenuBar;
+    CheckboxMenuItem scopeVMenuItem;
+    CheckboxMenuItem scopeIMenuItem;
+    CheckboxMenuItem scopeScaleMenuItem;
+    CheckboxMenuItem scopeMaxMenuItem;
+    CheckboxMenuItem scopeMinMenuItem;
+    CheckboxMenuItem scopeFreqMenuItem;
+    CheckboxMenuItem scopePowerMenuItem;
+    CheckboxMenuItem scopeIbMenuItem;
+    CheckboxMenuItem scopeIcMenuItem;
+    CheckboxMenuItem scopeIeMenuItem;
+    CheckboxMenuItem scopeVbeMenuItem;
+    CheckboxMenuItem scopeVbcMenuItem;
+    CheckboxMenuItem scopeVceMenuItem;
+    CheckboxMenuItem scopeVIMenuItem;
+    CheckboxMenuItem scopeXYMenuItem;
+    CheckboxMenuItem scopeResistMenuItem;
+    CheckboxMenuItem scopeVceIcMenuItem;
+    MenuItem scopeSelectYMenuItem;
+    
     int alphadiv =0;
 
 
@@ -149,6 +171,7 @@ class Scope {
 
     void setElm(CircuitElm ce) {
         elm = ce;
+        scopeMenuBar = buildScopeMenu(ce instanceof TransistorElm);
         reset();
     }
 
@@ -631,34 +654,118 @@ class Scope {
         speed *= 2;
         resetGraph();
     }
+    
+    MenuBar buildScopeMenu(boolean t) {
+        MenuBar m = new MenuBar(true);
+        m.addItem(new CheckboxAlignedMenuItem("Remove",new MyCommand("scopepop", "remove")));
+        m.addItem(new CheckboxAlignedMenuItem("Speed 2x", new MyCommand("scopepop", "speed2")));
+        m.addItem(new CheckboxAlignedMenuItem("Speed 1/2x", new MyCommand("scopepop", "speed1/2")));
+        m.addItem(new CheckboxAlignedMenuItem("Scale 2x", new MyCommand("scopepop", "scale")));
+        m.addItem(new CheckboxAlignedMenuItem("Max Scale", new MyCommand("scopepop", "maxscale")));
+        m.addItem(new CheckboxAlignedMenuItem("Stack", new MyCommand("scopepop", "stack")));
+        m.addItem(new CheckboxAlignedMenuItem("Unstack", new MyCommand("scopepop", "unstack")));
+        m.addItem(new CheckboxAlignedMenuItem("Reset", new MyCommand("scopepop", "reset")));
+        if (t) {
+            m.addItem(scopeIbMenuItem = new CheckboxMenuItem("Show Ib", new MyCommand("scopepop", "showib")));
+            m.addItem(scopeIcMenuItem = new CheckboxMenuItem("Show Ic", new MyCommand("scopepop", "showic")));
+            m.addItem(scopeIeMenuItem = new CheckboxMenuItem("Show Ie", new MyCommand("scopepop", "showie")));
+            m.addItem(scopeVbeMenuItem = new CheckboxMenuItem("Show Vbe", new MyCommand("scopepop", "showvbe")));
+            m.addItem(scopeVbcMenuItem = new CheckboxMenuItem("Show Vbc", new MyCommand("scopepop", "showvbc")));
+            m.addItem(scopeVceMenuItem = new CheckboxMenuItem("Show Vce", new MyCommand("scopepop", "showvce")));
+            m.addItem(scopeVceIcMenuItem = new CheckboxMenuItem("Show Vce vs Ic", new MyCommand("scopepop", "showvcevsic")));
+        } else {
+            m.addItem(scopeVMenuItem = new CheckboxMenuItem("Show Voltage", new MyCommand("scopepop", "showvoltage")));
+            m.addItem(scopeIMenuItem = new CheckboxMenuItem("Show Current", new MyCommand("scopepop", "showcurrent")));
+            m.addItem(scopePowerMenuItem = new CheckboxMenuItem("Show Power Consumed", new MyCommand("scopepop", "showpower")));
+            m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
+            m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
+            m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
+            m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
+            m.addItem(scopeVIMenuItem = new CheckboxMenuItem("Show V vs I", new MyCommand("scopepop", "showvvsi")));
+            m.addItem(scopeXYMenuItem = new CheckboxMenuItem("Plot X/Y", new MyCommand("scopepop", "plotxy")));
+            m.addItem(scopeSelectYMenuItem = new CheckboxAlignedMenuItem("Select Y", new MyCommand("scopepop", "selecty")));
+            m.addItem(scopeResistMenuItem = new CheckboxMenuItem("Show Resistance", new MyCommand("scopepop", "showresistance")));
+        }
+        return m;
+    }
 
     MenuBar getMenu() {
         if (elm == null)
             return null;
         if (elm instanceof TransistorElm) {
-            sim.scopeIbMenuItem.setState(value == VAL_IB);
-            sim.scopeIcMenuItem.setState(value == VAL_IC);
-            sim.scopeIeMenuItem.setState(value == VAL_IE);
-            sim.scopeVbeMenuItem.setState(value == VAL_VBE);
-            sim.scopeVbcMenuItem.setState(value == VAL_VBC);
-            sim.scopeVceMenuItem.setState(value == VAL_VCE && ivalue != VAL_IC);
-            sim.scopeVceIcMenuItem.setState(value == VAL_VCE && ivalue == VAL_IC);
-            return sim.transScopeMenuBar;
+            scopeIbMenuItem.setState(value == VAL_IB);
+            scopeIcMenuItem.setState(value == VAL_IC);
+            scopeIeMenuItem.setState(value == VAL_IE);
+            scopeVbeMenuItem.setState(value == VAL_VBE);
+            scopeVbcMenuItem.setState(value == VAL_VBC);
+            scopeVceMenuItem.setState(value == VAL_VCE && ivalue != VAL_IC);
+            scopeVceIcMenuItem.setState(value == VAL_VCE && ivalue == VAL_IC);
+            return scopeMenuBar;
         } else {
-            sim.scopeVMenuItem    .setState(showV && value == 0);
-            sim.scopeIMenuItem    .setState(showI && value == 0);
-            sim.scopeScaleMenuItem.setState(showScale);
-            sim.scopeMaxMenuItem  .setState(showMax);
-            sim.scopeMinMenuItem  .setState(showMin);
-            sim.scopeFreqMenuItem .setState(showFreq);
-            sim.scopePowerMenuItem.setState(value == VAL_POWER);
-            sim.scopeVIMenuItem   .setState(plot2d && !plotXY);
-            sim.scopeXYMenuItem   .setState(plotXY);
-            sim.scopeSelectYMenuItem.setEnabled(plotXY);
-            sim.scopeResistMenuItem.setState(value == VAL_R);
-            sim.scopeResistMenuItem.setEnabled(elm instanceof MemristorElm);
-            return sim.scopeMenuBar;
+            scopeVMenuItem    .setState(showV && value == 0);
+            scopeIMenuItem    .setState(showI && value == 0);
+            scopeScaleMenuItem.setState(showScale);
+            scopeMaxMenuItem  .setState(showMax);
+            scopeMinMenuItem  .setState(showMin);
+            scopeFreqMenuItem .setState(showFreq);
+            scopePowerMenuItem.setState(value == VAL_POWER);
+            scopeVIMenuItem   .setState(plot2d && !plotXY);
+            scopeXYMenuItem   .setState(plotXY);
+            scopeSelectYMenuItem.setEnabled(plotXY);
+            scopeResistMenuItem.setState(value == VAL_R);
+            scopeResistMenuItem.setEnabled(elm instanceof MemristorElm);
+            return scopeMenuBar;
         }
+    }
+
+    void handleMenu(String mi) {
+        if (mi == "showvoltage")
+            showVoltage(scopeVMenuItem.getState());
+        if (mi == "showcurrent")
+            showCurrent(scopeIMenuItem.getState());
+        if (mi=="showscale")
+            showScale(scopeScaleMenuItem.getState());
+        if (mi == "showpeak")
+            showMax(scopeMaxMenuItem.getState());
+        if (mi == "shownegpeak")
+            showMin(scopeMinMenuItem.getState());
+        if (mi == "showfreq")
+            showFreq(scopeFreqMenuItem.getState());
+        if (mi == "showpower")
+            setValue(VAL_POWER);
+        if (mi == "showib")
+            setValue(VAL_IB);
+        if (mi == "showic")
+            setValue(VAL_IC);
+        if (mi == "showie")
+            setValue(VAL_IE);
+        if (mi == "showvbe")
+            setValue(VAL_VBE);
+        if (mi == "showvbc")
+            setValue(VAL_VBC);
+        if (mi == "showvce")
+            setValue(VAL_VCE);
+        if (mi == "showvcevsic") {
+            plot2d = true;
+            plotXY = false;
+            value = VAL_VCE;
+            ivalue = VAL_IC;
+            resetGraph();
+        }
+
+        if (mi == "showvvsi") {
+            plot2d = scopeVIMenuItem.getState();
+            plotXY = false;
+            resetGraph();
+        }
+        if (mi == "plotxy") {
+            plotXY = plot2d = scopeXYMenuItem.getState();
+            if (yElm == null)
+                selectY();
+            resetGraph();
+        }
+        if (mi == "showresistance")
+            setValue(VAL_R);
     }
 
     void setValue(int x) {
@@ -692,7 +799,7 @@ class Scope {
         int e = new Integer(st.nextToken()).intValue();
         if (e == -1)
             return;
-        elm = sim.getElm(e);
+        setElm(sim.getElm(e));
         speed = new Integer(st.nextToken()).intValue();
         value = new Integer(st.nextToken()).intValue();
         int flags = new Integer(st.nextToken()).intValue();
@@ -788,56 +895,6 @@ class Scope {
 //    	dpixels = new float[w*h];
 //    	draw_ox = draw_oy = -1;
 //    }
-
-    void handleMenu(String mi) {
-        if (mi == "showvoltage")
-            showVoltage(sim.scopeVMenuItem.getState());
-        if (mi == "showcurrent")
-            showCurrent(sim.scopeIMenuItem.getState());
-        if (mi=="showscale")
-            showScale(sim.scopeScaleMenuItem.getState());
-        if (mi == "showpeak")
-            showMax(sim.scopeMaxMenuItem.getState());
-        if (mi == "shownegpeak")
-            showMin(sim.scopeMinMenuItem.getState());
-        if (mi == "showfreq")
-            showFreq(sim.scopeFreqMenuItem.getState());
-        if (mi == "showpower")
-            setValue(VAL_POWER);
-        if (mi == "showib")
-            setValue(VAL_IB);
-        if (mi == "showic")
-            setValue(VAL_IC);
-        if (mi == "showie")
-            setValue(VAL_IE);
-        if (mi == "showvbe")
-            setValue(VAL_VBE);
-        if (mi == "showvbc")
-            setValue(VAL_VBC);
-        if (mi == "showvce")
-            setValue(VAL_VCE);
-        if (mi == "showvcevsic") {
-            plot2d = true;
-            plotXY = false;
-            value = VAL_VCE;
-            ivalue = VAL_IC;
-            resetGraph();
-        }
-
-        if (mi == "showvvsi") {
-            plot2d = sim.scopeVIMenuItem.getState();
-            plotXY = false;
-            resetGraph();
-        }
-        if (mi == "plotxy") {
-            plotXY = plot2d = sim.scopeXYMenuItem.getState();
-            if (yElm == null)
-                selectY();
-            resetGraph();
-        }
-        if (mi == "showresistance")
-            setValue(VAL_R);
-    }
 
 //    void select() {
 //    	sim.setMouseElm(elm);

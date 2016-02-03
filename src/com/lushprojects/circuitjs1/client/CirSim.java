@@ -136,27 +136,7 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
     MenuItem elmCopyMenuItem;
     MenuItem elmDeleteMenuItem;
     MenuItem elmScopeMenuItem;
-    MenuBar scopeMenuBar;
-    MenuBar transScopeMenuBar;
     MenuBar mainMenuBar;
-    CheckboxMenuItem scopeVMenuItem;
-    CheckboxMenuItem scopeIMenuItem;
-    CheckboxMenuItem scopeScaleMenuItem;
-    CheckboxMenuItem scopeMaxMenuItem;
-    CheckboxMenuItem scopeMinMenuItem;
-    CheckboxMenuItem scopeFreqMenuItem;
-    CheckboxMenuItem scopePowerMenuItem;
-    CheckboxMenuItem scopeIbMenuItem;
-    CheckboxMenuItem scopeIcMenuItem;
-    CheckboxMenuItem scopeIeMenuItem;
-    CheckboxMenuItem scopeVbeMenuItem;
-    CheckboxMenuItem scopeVbcMenuItem;
-    CheckboxMenuItem scopeVceMenuItem;
-    CheckboxMenuItem scopeVIMenuItem;
-    CheckboxMenuItem scopeXYMenuItem;
-    CheckboxMenuItem scopeResistMenuItem;
-    CheckboxMenuItem scopeVceIcMenuItem;
-    MenuItem scopeSelectYMenuItem;
 
 //    Class addingClass;
     PopupPanel contextPanel = null;
@@ -630,9 +610,6 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
         elmMenuBar.addItem(elmDeleteMenuItem = new MenuItem("Delete",new MyCommand("elm","delete")));
 //	main.add(elmMenu);
 
-        scopeMenuBar = buildScopeMenu(false);
-        transScopeMenuBar = buildScopeMenu(true);
-
         // IES - remove interaction
 //	getSetupList(circuitsMenu, false);
 //	if (useFrame)
@@ -884,39 +861,6 @@ public class CirSim implements MouseDownHandler, MouseMoveHandler, MouseUpHandle
 //	super.requestFocus();
 //	cv.requestFocus();
 //    }
-    MenuBar buildScopeMenu(boolean t) {
-        MenuBar m = new MenuBar(true);
-        m.addItem(new CheckboxAlignedMenuItem("Remove",new MyCommand("scopepop", "remove")));
-        m.addItem(new CheckboxAlignedMenuItem("Speed 2x", new MyCommand("scopepop", "speed2")));
-        m.addItem(new CheckboxAlignedMenuItem("Speed 1/2x", new MyCommand("scopepop", "speed1/2")));
-        m.addItem(new CheckboxAlignedMenuItem("Scale 2x", new MyCommand("scopepop", "scale")));
-        m.addItem(new CheckboxAlignedMenuItem("Max Scale", new MyCommand("scopepop", "maxscale")));
-        m.addItem(new CheckboxAlignedMenuItem("Stack", new MyCommand("scopepop", "stack")));
-        m.addItem(new CheckboxAlignedMenuItem("Unstack", new MyCommand("scopepop", "unstack")));
-        m.addItem(new CheckboxAlignedMenuItem("Reset", new MyCommand("scopepop", "reset")));
-        if (t) {
-            m.addItem(scopeIbMenuItem = new CheckboxMenuItem("Show Ib", new MyCommand("scopepop", "showib")));
-            m.addItem(scopeIcMenuItem = new CheckboxMenuItem("Show Ic", new MyCommand("scopepop", "showic")));
-            m.addItem(scopeIeMenuItem = new CheckboxMenuItem("Show Ie", new MyCommand("scopepop", "showie")));
-            m.addItem(scopeVbeMenuItem = new CheckboxMenuItem("Show Vbe", new MyCommand("scopepop", "showvbe")));
-            m.addItem(scopeVbcMenuItem = new CheckboxMenuItem("Show Vbc", new MyCommand("scopepop", "showvbc")));
-            m.addItem(scopeVceMenuItem = new CheckboxMenuItem("Show Vce", new MyCommand("scopepop", "showvce")));
-            m.addItem(scopeVceIcMenuItem = new CheckboxMenuItem("Show Vce vs Ic", new MyCommand("scopepop", "showvcevsic")));
-        } else {
-            m.addItem(scopeVMenuItem = new CheckboxMenuItem("Show Voltage", new MyCommand("scopepop", "showvoltage")));
-            m.addItem(scopeIMenuItem = new CheckboxMenuItem("Show Current", new MyCommand("scopepop", "showcurrent")));
-            m.addItem(scopePowerMenuItem = new CheckboxMenuItem("Show Power Consumed", new MyCommand("scopepop", "showpower")));
-            m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
-            m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
-            m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
-            m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
-            m.addItem(scopeVIMenuItem = new CheckboxMenuItem("Show V vs I", new MyCommand("scopepop", "showvvsi")));
-            m.addItem(scopeXYMenuItem = new CheckboxMenuItem("Plot X/Y", new MyCommand("scopepop", "plotxy")));
-            m.addItem(scopeSelectYMenuItem = new CheckboxAlignedMenuItem("Select Y", new MyCommand("scopepop", "selecty")));
-            m.addItem(scopeResistMenuItem = new CheckboxMenuItem("Show Resistance", new MyCommand("scopepop", "showresistance")));
-        }
-        return m;
-    }
 
 // IES - remove interaction
     /*
