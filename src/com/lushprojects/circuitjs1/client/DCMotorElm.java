@@ -173,4 +173,36 @@ class DCMotorElm extends CircuitElm {
         if (n == 4 && ei.value > 0)
             friction = ei.value;
     }
+    
+    double getScopeValue(int x) {
+        switch (x) {
+            case 2:
+                return vel;
+            case 3:
+                return pos;
+        }
+        return super.getScopeValue(x);
+    }
+    
+    String getScopeUnits(int x) {
+        switch (x) {
+            case 2:
+                return "rad/s";
+            case 3:
+                return "rad";
+        }
+        return super.getScopeUnits(x);
+    }
+    
+    String getScopeInfo(int x) {
+        switch (x) {
+            case 2: return "Show Velocity";
+            case 3: return "Show Position";
+        }
+        return super.getScopeInfo(x);
+    }
+    
+    boolean canViewInScope() {
+        return true;
+    }
 }
