@@ -23,6 +23,7 @@ package com.lushprojects.circuitjs1.client;
 //import java.util.StringTokenizer;
 
 class MemristorElm extends CircuitElm {
+    static final int VAL_RESISTANCE = 2;
     double r_on, r_off, dopeWidth, totalWidth, mobility, resistance;
     public MemristorElm(int xx, int yy) {
         super(xx, yy);
@@ -124,11 +125,15 @@ class MemristorElm extends CircuitElm {
         arr[4] = "P = " + getUnitText(getPower(), "W");
     }
     double getScopeValue(int x) {
-        return (x == 2) ? resistance : (x == 1) ? getPower() : getVoltageDiff();
+        return (x == VAL_RESISTANCE) ? resistance : super.getScopeValue(x);
     }
     String getScopeUnits(int x) {
-        return (x == 2) ? sim.ohmString : (x == 1) ? "W" : "V";
+        return (x == VAL_RESISTANCE) ? sim.ohmString : super.getScopeUnits(x);
     }
+    String getScopeInfo(int x) {
+        return (x == VAL_RESISTANCE) ? "Show Resistance" : super.getScopeInfo(x);
+    }
+    
     public EditInfo getEditInfo(int n) {
         if (n == 0)
             return new EditInfo("Max Resistance (ohms)", r_on, 0, 0);

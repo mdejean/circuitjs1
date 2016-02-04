@@ -768,11 +768,32 @@ public abstract class CircuitElm implements Editable {
         return getVoltageDiff()*current;
     }
     double getScopeValue(int x) {
-        return (x == 1) ? getPower() : getVoltageDiff();
+        switch (x) {
+            case -1: return getCurrent();
+            case 0: return getVoltageDiff();
+            case 1: return getPower();
+        }
+        return 0;
     }
+    
     String getScopeUnits(int x) {
-        return (x == 1) ? "W" : "V";
+        switch (x) {
+            case -1: return "A";
+            case 0: return "V";
+            case 1: return "W";
+        }
+        return null;
     }
+    
+    String getScopeInfo(int x) {
+        switch (x) {
+            case -1: return "Show Current";
+            case 0: return "Show Voltage";
+            case 1: return "Show Power Consumed";
+        }
+        return null;
+    }
+            
     public EditInfo getEditInfo(int n) {
         return null;
     }

@@ -34,14 +34,9 @@ import com.google.gwt.canvas.dom.client.Context2d;
 
 class Scope {
     final int FLAG_YELM = 32;
+    static final int VAL_CURRENT = -1;
+    static final int VAL_VOLTAGE = 0;
     static final int VAL_POWER = 1;
-    static final int VAL_IB = 1;
-    static final int VAL_IC = 2;
-    static final int VAL_IE = 3;
-    static final int VAL_VBE = 4;
-    static final int VAL_VBC = 5;
-    static final int VAL_VCE = 6;
-    static final int VAL_R = 2;
     double minV[], maxV[], minMaxV;
     double minI[], maxI[], minMaxI;
     int scopePointCount = 128;
@@ -61,19 +56,11 @@ class Scope {
     Context2d imageContext;
     
     MenuBar scopeMenuBar;
-    CheckboxMenuItem scopeVMenuItem;
-    CheckboxMenuItem scopeIMenuItem;
     CheckboxMenuItem scopeScaleMenuItem;
     CheckboxMenuItem scopeMaxMenuItem;
     CheckboxMenuItem scopeMinMenuItem;
     CheckboxMenuItem scopeFreqMenuItem;
-    CheckboxMenuItem scopePowerMenuItem;
-    CheckboxMenuItem scopeIbMenuItem;
-    CheckboxMenuItem scopeIcMenuItem;
-    CheckboxMenuItem scopeIeMenuItem;
-    CheckboxMenuItem scopeVbeMenuItem;
-    CheckboxMenuItem scopeVbcMenuItem;
-    CheckboxMenuItem scopeVceMenuItem;
+    CheckboxMenuItem[] scopeValueMenuItems;
     CheckboxMenuItem scopeVIMenuItem;
     CheckboxMenuItem scopeXYMenuItem;
     CheckboxMenuItem scopeResistMenuItem;
@@ -95,11 +82,13 @@ class Scope {
 
     void showCurrent(boolean b) {
         showI = b;
-        value = ivalue = 0;
+        value = 0;
+        ivalue = -1;
     }
     void showVoltage(boolean b) {
         showV = b;
-        value = ivalue = 0;
+        value = 0;
+        ivalue = -1;
     }
     void showMax    (boolean b) {
         showMax = b;
@@ -151,9 +140,10 @@ class Scope {
                             elm instanceof ProbeElm))
             showI = false;
 
-        value = ivalue = 0;
+        value = 0;
+        ivalue = -1;
         if (elm instanceof TransistorElm)
-            value = VAL_VCE;
+            value = TransistorElm.VAL_VCE;
     }
 
     void setRect(Rectangle r) {
@@ -184,8 +174,8 @@ class Scope {
         if (v > maxV[ptr])
             maxV[ptr] = v;
         double i = 0;
-        if (value == 0 || ivalue != 0) {
-            i = (ivalue == 0) ? elm.getCurrent() : elm.getScopeValue(ivalue);
+        if (value == 0 || ivalue != -1) {
+            i = elm.getScopeValue(ivalue);
             if (i < minI[ptr])
                 minI[ptr] = i;
             if (i > maxI[ptr])
@@ -665,54 +655,54 @@ class Scope {
         m.addItem(new CheckboxAlignedMenuItem("Stack", new MyCommand("scopepop", "stack")));
         m.addItem(new CheckboxAlignedMenuItem("Unstack", new MyCommand("scopepop", "unstack")));
         m.addItem(new CheckboxAlignedMenuItem("Reset", new MyCommand("scopepop", "reset")));
+        
+        if (elm == null) return m;
+        scopeValueMenuItems = new CheckboxMenuItem[20]; //FIXME 0, 1, inf
+        //value starts at -1 because Show Voltage is 0 and we don't want to break compatibility with imports
+        for (int n = -1; n < scopeValueMenuItems.length-1; n++) {
+            String s = elm.getScopeInfo(n);
+            if (s == null) {
+                scopeValueMenuItems[n+1] = null;
+            } else {
+                scopeValueMenuItems[n+1] = new CheckboxMenuItem(s, new MyCommand("scopepop", String.valueOf(n)));
+                m.addItem(scopeValueMenuItems[n+1]);
+            }
+        }
+
         if (t) {
-            m.addItem(scopeIbMenuItem = new CheckboxMenuItem("Show Ib", new MyCommand("scopepop", "showib")));
-            m.addItem(scopeIcMenuItem = new CheckboxMenuItem("Show Ic", new MyCommand("scopepop", "showic")));
-            m.addItem(scopeIeMenuItem = new CheckboxMenuItem("Show Ie", new MyCommand("scopepop", "showie")));
-            m.addItem(scopeVbeMenuItem = new CheckboxMenuItem("Show Vbe", new MyCommand("scopepop", "showvbe")));
-            m.addItem(scopeVbcMenuItem = new CheckboxMenuItem("Show Vbc", new MyCommand("scopepop", "showvbc")));
-            m.addItem(scopeVceMenuItem = new CheckboxMenuItem("Show Vce", new MyCommand("scopepop", "showvce")));
             m.addItem(scopeVceIcMenuItem = new CheckboxMenuItem("Show Vce vs Ic", new MyCommand("scopepop", "showvcevsic")));
-            m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
-            m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
-            m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
-            m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
-        } else {
-            m.addItem(scopeVMenuItem = new CheckboxMenuItem("Show Voltage", new MyCommand("scopepop", "showvoltage")));
-            m.addItem(scopeIMenuItem = new CheckboxMenuItem("Show Current", new MyCommand("scopepop", "showcurrent")));
-            m.addItem(scopePowerMenuItem = new CheckboxMenuItem("Show Power Consumed", new MyCommand("scopepop", "showpower")));
-            m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
-            m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
-            m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
-            m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
+        }
+
+        m.addItem(scopeScaleMenuItem = new CheckboxMenuItem("Show Scale", new MyCommand("scopepop", "showscale")));
+        m.addItem(scopeMaxMenuItem = new CheckboxMenuItem("Show Peak Value", new MyCommand("scopepop", "showpeak")));
+        m.addItem(scopeMinMenuItem = new CheckboxMenuItem("Show Negative Peak Value", new MyCommand("scopepop", "shownegpeak")));
+        m.addItem(scopeFreqMenuItem = new CheckboxMenuItem("Show Frequency", new MyCommand("scopepop", "showfreq")));
+
+        if (!t) {
             m.addItem(scopeVIMenuItem = new CheckboxMenuItem("Show V vs I", new MyCommand("scopepop", "showvvsi")));
             m.addItem(scopeXYMenuItem = new CheckboxMenuItem("Plot X/Y", new MyCommand("scopepop", "plotxy")));
             m.addItem(scopeSelectYMenuItem = new CheckboxAlignedMenuItem("Select Y", new MyCommand("scopepop", "selecty")));
-            m.addItem(scopeResistMenuItem = new CheckboxMenuItem("Show Resistance", new MyCommand("scopepop", "showresistance")));
         }
+        
         return m;
     }
 
     MenuBar getMenu() {
         if (elm == null)
             return null;
+        for (int n = -1; n < scopeValueMenuItems.length-1; n++) {
+            if (scopeValueMenuItems[n+1] != null) {
+                scopeValueMenuItems[n+1].setState((value == n || (ivalue == n && showI)) && !plot2d);
+            }
+        }
         if (elm instanceof TransistorElm) {
-            scopeIbMenuItem.setState(value == VAL_IB);
-            scopeIcMenuItem.setState(value == VAL_IC);
-            scopeIeMenuItem.setState(value == VAL_IE);
-            scopeVbeMenuItem.setState(value == VAL_VBE);
-            scopeVbcMenuItem.setState(value == VAL_VBC);
-            scopeVceMenuItem.setState(value == VAL_VCE && ivalue != VAL_IC);
-            scopeVceIcMenuItem.setState(value == VAL_VCE && ivalue == VAL_IC);
+            scopeVceIcMenuItem.setState(value == TransistorElm.VAL_VCE && ivalue == TransistorElm.VAL_IC);
         } else {
-            scopeVMenuItem    .setState(showV && value == 0);
-            scopeIMenuItem    .setState(showI && value == 0);
-            scopePowerMenuItem.setState(value == VAL_POWER);
+            scopeValueMenuItems[1].setState(showV && value == 0);
+            scopeValueMenuItems[0].setState(showI && value == 0);
             scopeVIMenuItem   .setState(plot2d && !plotXY);
             scopeXYMenuItem   .setState(plotXY);
             scopeSelectYMenuItem.setEnabled(plotXY);
-            scopeResistMenuItem.setState(value == VAL_R);
-            scopeResistMenuItem.setEnabled(elm instanceof MemristorElm);
         }
         scopeScaleMenuItem.setState(showScale);
         scopeMaxMenuItem  .setState(showMax);
@@ -723,67 +713,71 @@ class Scope {
 
     void handleMenu(String mi) {
         sim.pushUndo();
-        if (mi=="remove")
+        switch (mi) {
+        case "remove":
             setElm(null);
-        if (mi=="speed2")
+            break;
+        case "speed2":
             speedUp();
-        if (mi=="speed1/2")
+            break;
+        case "speed1/2":
             slowDown();
-        if (mi=="scale")
+            break;
+        case "scale":
             adjustScale(.5);
-        if (mi=="maxscale")
+            break;
+        case "maxscale":
             adjustScale(1e-50);
-        if (mi=="selecty")
+            break;
+        case "selecty":
             selectY();
-        if (mi=="reset")
+            break;
+        case "reset":
             resetGraph();
-        if (mi == "showvoltage")
-            showVoltage(scopeVMenuItem.getState());
-        if (mi == "showcurrent")
-            showCurrent(scopeIMenuItem.getState());
-        if (mi=="showscale")
+            break;
+        case "showscale":
             showScale(scopeScaleMenuItem.getState());
-        if (mi == "showpeak")
+            break;
+        case "showpeak":
             showMax(scopeMaxMenuItem.getState());
-        if (mi == "shownegpeak")
+            break;
+        case "shownegpeak":
             showMin(scopeMinMenuItem.getState());
-        if (mi == "showfreq")
+            break;
+        case "showfreq":
             showFreq(scopeFreqMenuItem.getState());
-        if (mi == "showpower")
-            setValue(VAL_POWER);
-        if (mi == "showib")
-            setValue(VAL_IB);
-        if (mi == "showic")
-            setValue(VAL_IC);
-        if (mi == "showie")
-            setValue(VAL_IE);
-        if (mi == "showvbe")
-            setValue(VAL_VBE);
-        if (mi == "showvbc")
-            setValue(VAL_VBC);
-        if (mi == "showvce")
-            setValue(VAL_VCE);
-        if (mi == "showvcevsic") {
-            plot2d = true;
-            plotXY = false;
-            value = VAL_VCE;
-            ivalue = VAL_IC;
-            resetGraph();
-        }
-
-        if (mi == "showvvsi") {
+            break;
+        case "showvvsi":
             plot2d = scopeVIMenuItem.getState();
             plotXY = false;
             resetGraph();
-        }
-        if (mi == "plotxy") {
+            break;
+        case "plotxy":
             plotXY = plot2d = scopeXYMenuItem.getState();
             if (yElm == null)
                 selectY();
             resetGraph();
+            break;
+        case "0": //FIXME: Get this into CircuitElm somehow
+            showVoltage(scopeValueMenuItems[1].getState());
+            break;
+        case "-1":
+            showCurrent(scopeValueMenuItems[0].getState());
+            break;
+        case "showvcevsic":
+            plot2d = true;
+            plotXY = false;
+            value = TransistorElm.VAL_VCE;
+            ivalue = TransistorElm.VAL_IC;
+            resetGraph();
+            break;
+        default: 
+            try {
+                int val = Integer.parseInt(mi);
+                setValue(val);
+            } catch (Exception e) { }
+            break;
         }
-        if (mi == "showresistance")
-            setValue(VAL_R);
     }
 
     void setValue(int x) {

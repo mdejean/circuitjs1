@@ -27,6 +27,12 @@ class TransistorElm extends CircuitElm {
     double fgain;
     double gmin;
     final int FLAG_FLIP = 1;
+    static final int VAL_IB = 1;
+    static final int VAL_IC = 2;
+    static final int VAL_IE = 3;
+    static final int VAL_VBE = 4;
+    static final int VAL_VBC = 5;
+    static final int VAL_VCE = 6;
     TransistorElm(int xx, int yy, boolean pnpflag) {
         super(xx, yy);
         pnp = (pnpflag) ? -1 : 1;
@@ -267,17 +273,17 @@ class TransistorElm extends CircuitElm {
 
     double getScopeValue(int x) {
         switch (x) {
-        case Scope.VAL_IB:
+        case VAL_IB:
             return ib;
-        case Scope.VAL_IC:
+        case VAL_IC:
             return ic;
-        case Scope.VAL_IE:
+        case VAL_IE:
             return ie;
-        case Scope.VAL_VBE:
+        case VAL_VBE:
             return volts[0]-volts[2];
-        case Scope.VAL_VBC:
+        case VAL_VBC:
             return volts[0]-volts[1];
-        case Scope.VAL_VCE:
+        case VAL_VCE:
             return volts[1]-volts[2];
         }
         return 0;
@@ -285,14 +291,33 @@ class TransistorElm extends CircuitElm {
 
     String getScopeUnits(int x) {
         switch (x) {
-        case Scope.VAL_IB:
-        case Scope.VAL_IC:
-        case Scope.VAL_IE:
+        case VAL_IB:
+        case VAL_IC:
+        case VAL_IE:
             return "A";
         default:
             return "V";
         }
     }
+    
+    public String getScopeInfo(int x) {
+        switch (x) {
+        case VAL_IB:
+            return "Show Ib";
+        case VAL_IC:
+            return "Show Ic";
+        case VAL_IE:
+            return "Show Ie";
+        case VAL_VBE:
+            return "Show Vbe";
+        case VAL_VBC:
+            return "Show Vbc";
+        case VAL_VCE:
+            return "Show Vce";
+        }
+        return null;
+    }
+    
     public EditInfo getEditInfo(int n) {
         if (n == 0)
             return new EditInfo("Beta/hFE", beta, 10, 1000).
